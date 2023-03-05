@@ -1,10 +1,10 @@
 import React from 'react';
 import { runInAction } from 'mobx';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { IPost, IProfile, IGroup, INFT } from 'apis/types';
+import { IPost, IGroup } from 'apis/types';
 import { TrxStorage } from 'apis/common';
 import PostItem from 'components/Post/Item';
-import { PostApi, TrxApi, ContractApi } from 'apis';
+import { PostApi, TrxApi } from 'apis';
 import Editor from 'components/Editor';
 import { lang } from 'utils/lang';
 import { useStore } from 'store';
@@ -22,16 +22,16 @@ import { IActivity } from 'rum-sdk-browser';
 import { v4 as uuid } from 'uuid';
 import base64 from 'utils/base64';
 import useCheckPermission from 'hooks/useCheckPermission';
-import Tooltip from '@material-ui/core/Tooltip';
 import openContractModal from 'components/openContractModal';
 import openGroupInfo from 'components/openGroupInfo';
 import { MdOutlineErrorOutline } from 'react-icons/md';
 import { BiChevronRight } from 'react-icons/bi';
+import MyNFTs from './MyNFTs';
 
 import './index.css';
 
 export default observer((props: RouteChildrenProps) => {
-  const { userStore, postStore, groupStore, confirmDialogStore, snackbarStore, commentStore } = useStore();
+  const { userStore, postStore, groupStore, snackbarStore } = useStore();
   const groupName = (props.match?.params as { groupName: string }).groupName.toLowerCase();
   const state = useLocalObservable(() => ({
     content: '',
@@ -43,8 +43,6 @@ export default observer((props: RouteChildrenProps) => {
     page: 1,
     group: null as IGroup | null,
     invisible: false,
-    nfts: [] as INFT[],
-    fetchedNFTs: false,
     get fetched() {
       return this.fetchedGroup && this.fetchedPosts
     },
@@ -92,9 +90,6 @@ export default observer((props: RouteChildrenProps) => {
         await fetchPosts(group.groupId);
         state.group = group;
         document.title = group.groupAlias;
-        if (userStore.isLogin) {
-          fetchNFTs(group.groupName, userStore.address);
-        }
       } catch (err) {
         console.log(err);
       }
@@ -162,21 +157,6 @@ export default observer((props: RouteChildrenProps) => {
     }
   }, [postStore.feedType]);
 
-  const fetchNFTs = async (groupName: string, userAddress: string) => {
-    try {
-      const [mainnet, contractAddress] = groupName.split('.');
-      const nfts = await ContractApi.checkUserAddress({
-        mainnet,
-        contractAddress,
-        userAddress
-      });
-      state.nfts = nfts;
-    } catch (err) {
-      console.log(err);
-    }
-    state.fetchedNFTs = true;
-  }
-
   const [sentryRef, { rootRef }] = useInfiniteScroll({
     loading: state.fetchingPosts,
     hasNextPage: state.hasMore,
@@ -220,67 +200,6 @@ export default observer((props: RouteChildrenProps) => {
       postCount: userStore.user.postCount + 1
     });
     state.content = '';
-  }
-
-  const setAvatar = (avatar: string) => {
-    confirmDialogStore.show({
-      content: 'Are you sure to set this NFT as avatar ?',
-      ok: async () => {
-        try {
-          confirmDialogStore.setLoading(true);
-          const ret: any = await base64.getFromBlobUrl(avatar);
-          const imageBase64 = ret.url;
-          console.log(`[]:`, { imageBase64 });
-          const res = await TrxApi.createActivity({
-            type: "Create",
-            object: {
-              type: 'Profile',
-              describes: {
-                type: 'Person',
-                id: userStore.address,
-              },
-              name: userStore.profile.name,
-              image: [{
-                type: 'Image',
-                mediaType: base64.getMimeType(imageBase64),
-                content: base64.getContent(imageBase64),
-              } as any]
-            }
-          }, groupStore.defaultGroup.groupId);
-          console.log(res)
-          const profile: IProfile = {
-            name: userStore.profile.name,
-            avatar: imageBase64,
-            groupId: groupStore.defaultGroup.groupId,
-            userAddress: userStore.address
-          };
-          runInAction(() => {
-            userStore.setProfile(profile);
-            for (const post of [...postStore.posts, ...postStore.userPosts]) {
-              if (post.userAddress === userStore.address) {
-                post.extra.userProfile = profile;
-              }
-            }
-            for (const comment of commentStore.comments) {
-              if (comment.userAddress === userStore.address) {
-                comment.extra.userProfile = profile;
-              }
-            }
-          })
-          confirmDialogStore.hide();
-          await sleep(400);
-          snackbarStore.show({
-            message: lang.saved,
-          });
-        } catch (err) {
-          console.log(err);
-          snackbarStore.show({
-            message: lang.somethingWrong,
-          });
-          confirmDialogStore.setLoading(false);
-        }
-      },
-    });
   }
 
   return (
@@ -369,29 +288,7 @@ export default observer((props: RouteChildrenProps) => {
                     enabledImage
                   />
                   {userStore.isLogin && (
-                    <div className="flex items-center absolute bottom-0 left-[80px]">
-                      {!state.fetchedNFTs && <div className="mt-[-28px]"><Loading size={12} /></div>}
-                      {state.fetchedNFTs && state.nfts.length === 0 && (
-                        <div className="mt-[-28px]">
-                          <div className="bg-[#e3e5e6] bg-opacity-60 dark:bg-opacity-10 text-12 py-[2px] px-2 flex items-center rounded-full">
-                            <span className="text-[#37434D] opacity-[0.6] font-bold dark:text-white dark:opacity-50">You don't have this NFT</span>
-                          </div>
-                        </div>
-                      )}
-                      {state.fetchedNFTs && state.nfts.map(nft => (
-                        <div key={nft.tokenId} className="mr-3" onClick={() => setAvatar(nft.image)}>
-                          <Tooltip
-                            enterDelay={200}
-                            enterNextDelay={200}
-                            placement="top"
-                            title='Set this NFT as avatar'
-                            arrow
-                            >
-                            <img className="cursor-pointer w-[28px] h-[28px] rounded-6" src={nft.image} alt={`${nft.tokenId}`} />
-                          </Tooltip>
-                        </div>
-                      ))}
-                    </div>
+                    <MyNFTs groupName={state.group.groupName} />
                   )}
                 </div>
                 <div className={classNames({

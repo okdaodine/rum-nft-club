@@ -1,7 +1,7 @@
 import React from 'react';
 import { runInAction } from 'mobx';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { IPost, IProfile } from 'apis/types';
+import { IPost } from 'apis/types';
 import { TrxStorage } from 'apis/common';
 import PostItem from 'components/Post/Item';
 import { PostApi, TrxApi } from 'apis';
@@ -124,18 +124,32 @@ export default observer(() => {
     <div className="box-border w-full h-screen overflow-auto bg-white dark:bg-[#181818] md:bg-transparent" ref={rootRef}>
       <TopPlaceHolder />
       <div className="w-full md:w-[600px] box-border mx-auto relative pb-16">
-        <div className="md:pt-5">
-          <div className="py-3 px-5 flex justify-between items-center bg-white/30 rounded-12">
-            <div className="text-18 text-white/80">Find your NFT club</div>
-            <Button onClick={() => {
-              state.showGroupsModal = true;
-            }}>Go</Button>
-            <GroupsModal
-              open={state.showGroupsModal}
-              onClose={() => {
-                state.showGroupsModal = false;
+        <div>
+          <div className="flex items-stretch overflow-hidden relative p-5 pb-4 px-4 md:pb-5 md:px-10 md:rounded-12 md:mt-5">
+            <div
+              className="absolute top-0 left-0 w-full h-full overflow-hidden bg-cover bg-center md:rounded-12"
+              style={{
+                backgroundImage: `url('/default_cover.png')`,
               }}
-            />
+            >
+              <div className="absolute top-0 left-0 right-0 bottom-0 blur-layer md:rounded-12" />
+            </div>
+            <div className="z-10 flex justify-between items-center w-full">
+              <div className="text-18 text-white/90 font-bold tracking-widest">Find your NFT club</div>
+              <Button
+                color="white"
+                onClick={() => {
+                  state.showGroupsModal = true;
+                }}>
+                Go
+              </Button>
+              <GroupsModal
+                open={state.showGroupsModal}
+                onClose={() => {
+                  state.showGroupsModal = false;
+                }}
+              />
+            </div>
           </div>
           <div className="hidden _md:block">
             <Editor

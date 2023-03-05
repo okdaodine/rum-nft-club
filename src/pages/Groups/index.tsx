@@ -101,7 +101,7 @@ export default observer(() => {
             <div>
               <div className="flex items-center">
                 <span className="font-bold text-18 md:text-20 dark:text-white dark:text-opacity-80 text-gray-33 tracking-wider truncate max-w-[180px] md:max-w-[280px]">
-                  {group.groupName}
+                  {group.groupAlias}
                 </span>
               </div>
               <div className="mt-[15px] dark:text-white dark:text-opacity-80 text-gray-9b flex items-center cursor-pointer" onClick={async () => {
