@@ -139,6 +139,13 @@ export const content = {
   connected: '连接',
   nodes: '个节点',
   synced: '同步',
-  contents: '条内容'};
+  contents: '条内容',
+  findYourNFTClub: '寻找你们的 NFT 俱乐部',
+  go: '前往',
+  setThisNFTAsAvatar: '把这个 NFT 设置为头像',
+  AreYouSureToSetThisNFTAsAvatar: '确定要设置为头像吗 ?',
+  youDoNotHaveNFTSoYouCannotPostContent: '你需要持有这个 NFT 才可以发送内容哦',
+  youDoNotHaveThisNFT: '你没有持有这个 NFT'
+}
 
 export type Content = typeof content;

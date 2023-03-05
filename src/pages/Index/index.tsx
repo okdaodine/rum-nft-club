@@ -135,13 +135,13 @@ export default observer(() => {
               <div className="absolute top-0 left-0 right-0 bottom-0 blur-layer md:rounded-12" />
             </div>
             <div className="z-10 flex justify-between items-center w-full">
-              <div className="text-18 text-white/90 font-bold tracking-widest">Find your NFT club</div>
+              <div className="text-18 text-white/90 font-bold tracking-widest">{lang.findYourNFTClub}</div>
               <Button
                 color="white"
                 onClick={() => {
                   state.showGroupsModal = true;
                 }}>
-                Go
+                {lang.go}
               </Button>
               <GroupsModal
                 open={state.showGroupsModal}

@@ -39,10 +39,9 @@ export default observer((props: IProps) => {
     })();
   }, []);
 
-
   const setAvatar = (avatar: string) => {
     confirmDialogStore.show({
-      content: 'Are you sure to set this NFT as avatar ?',
+      content: lang.AreYouSureToSetThisNFTAsAvatar,
       ok: async () => {
         try {
           confirmDialogStore.setLoading(true);
@@ -107,7 +106,7 @@ export default observer((props: IProps) => {
       {state.fetchedNFTs && state.nfts.length === 0 && (
         <div className="mt-[-28px]">
           <div className="bg-[#e3e5e6] bg-opacity-60 dark:bg-opacity-10 text-12 py-[2px] px-2 flex items-center rounded-full">
-            <span className="text-[#37434D] opacity-[0.6] font-bold dark:text-white dark:opacity-50">You don't have this NFT</span>
+            <span className="text-[#37434D] opacity-[0.6] font-bold dark:text-white dark:opacity-50">{lang.youDoNotHaveThisNFT}</span>
           </div>
         </div>
       )}
@@ -117,7 +116,7 @@ export default observer((props: IProps) => {
             enterDelay={200}
             enterNextDelay={200}
             placement="top"
-            title='Set this NFT as avatar'
+            title={lang.setThisNFTAsAvatar}
             arrow
             >
             <img className="cursor-pointer w-[28px] h-[28px] rounded-6" src={nft.image} alt={`${nft.tokenId}`} />

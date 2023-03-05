@@ -22,7 +22,7 @@ const UserList = observer((props: IProps) => {
   return (
     <div className="bg-white dark:bg-[#181818] rounded-12 dark:text-white dark:text-opacity-80 text-gray-4a">
       <div className="px-5 py-5 leading-none text-18 border-b dark:border-white dark:md:border-opacity-10 dark:border-opacity-[0.05] border-gray-d8 border-opacity-75 flex justify-between items-center font-bold">
-        Find your NFT club
+        {lang.findYourNFTClub}
         <div className="cursor-pointer text-24 px-2" onClick={() => openContractModal()}>
           <AiOutlineSearch />
         </div>
@@ -35,11 +35,6 @@ const UserList = observer((props: IProps) => {
               key={group.groupName}
             >
               <div>
-                {/* <img
-                  className="w-10 h-10 rounded-full"
-                  src={group.extra.userProfile.avatar}
-                  alt={group.extra.userProfile.name}
-                /> */}
                 <div className="text-16 font-bold tracking-wider w-[230px] truncate">{group.groupAlias}</div>
                 <div className="text-12 mt-1 opacity-60 tracking-wider">
                   {lang.synced}<span className="font-bold mx-[6px]">{group.contentCount}</span>{lang.contents}

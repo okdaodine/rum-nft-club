@@ -123,9 +123,9 @@ export default observer(() => {
   React.useEffect(() => {
     const { pathname } = location;
     if (pathname === `/`) {
-      document.title = configStore.config.title || 'Rum 微博广场';
+      document.title = configStore.config.siteName || 'Rum Feed';
     } else if (pathname === `/search`) {
-      document.title = '搜索';
+      document.title = lang.search;
     }
   }, [location.pathname]);
 

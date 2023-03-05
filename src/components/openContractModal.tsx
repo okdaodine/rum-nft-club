@@ -88,7 +88,7 @@ const ModalWrapper = observer((props: IModalProps) => {
       <div className="p-8 relative w-full md:w-[380px] h-[40vh] md:h-auto box-border">
         <div className="text-18 font-bold dark:text-white dark:text-opacity-80 text-gray-700 text-center">
           <div className="flex items-center justify-center">
-            Find your NFT club
+            {lang.findYourNFTClub}
           </div>
         </div>
         <div className="pt-8 px-2">
