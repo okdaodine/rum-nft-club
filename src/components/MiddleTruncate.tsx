@@ -36,7 +36,7 @@ export default observer((props: IProps) => {
         <div className="truncate">{`${string.slice(
           0,
           length,
-        )}......${string.slice(-length)}`}</div>
+        )}...${string.slice(-length)}`}</div>
       </Tooltip>
     </div>
   );

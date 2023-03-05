@@ -58,7 +58,7 @@ module.exports = async (url) => {
       groupName,
       groupAlias: groupName,
       startTrx: '',
-      status: '',
+      status: 'connected',
       loaded: false,
       contentCount: 0
     });

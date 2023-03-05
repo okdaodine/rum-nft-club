@@ -1,5 +1,6 @@
 const ethers = require('ethers');
 const axios = require('axios');
+const config = require('../config');
 
 const ERC721_ABI = [
   'constructor(string name, string symbol, string baseTokenURI)',
@@ -44,7 +45,7 @@ const ERC721_ABI = [
   'function unpause()'
 ];
 
-const RPC_MAPPING = {
+const RPC_MAPPING = config.RPC_MAPPING || {
   ethereum: 'https://eth.llamarpc.com',
   arbitrum: 'https://1rpc.io/arb',
   optimism: 'https://mainnet.optimism.io',
@@ -97,5 +98,6 @@ const getInt = (bn) => {
 module.exports = {
   getContractName,
   getNFTCount,
-  getNFTs
+  getNFTs,
+  RPC_MAPPING
 }

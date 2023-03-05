@@ -22,8 +22,8 @@ const mainnetList = [
   'Optimism',
   'Polygon',
   'Avalanche',
-  'Bsc',
-  'Rum'
+  'BSC',
+  'RUM'
 ];
 
 interface IModalProps extends IProps {
@@ -106,7 +106,10 @@ const ModalWrapper = observer((props: IModalProps) => {
             >
               {mainnetList.map(mainnet => (
                 <MenuItem value={mainnet.toLowerCase()}>
-                  <span className="font-bold tracking-wider text-16 py-1">{mainnet}</span>
+                  <div className="font-bold tracking-wider text-16 py-1 flex items-center">
+                    <img className="w-6 h-6 rounded-full mr-2" src={`/mainnet/${mainnet.toLowerCase()}.png`} alt={mainnet} />
+                    <span className="mt-[2px]">{mainnet}</span>
+                  </div>
                 </MenuItem>
               ))}
             </Select>

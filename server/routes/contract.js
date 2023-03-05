@@ -6,7 +6,7 @@ const NFT = require('../database/sequelize/nft');
 const { RumFullNodeClient } = require('rum-fullnode-sdk');
 const createSeed = require('../utils/createSeed');
 const Contract = require('../utils/contract');
-const { assert, Errors, throws } = require('../utils/validator');
+const { assert, Errors } = require('../utils/validator');
 
 router.post('/:mainnet/:contractAddress', checkGroup);
 router.post('/:mainnet/:contractAddress/:userAddress', checkUserAddress);
@@ -22,6 +22,7 @@ async function checkGroup(ctx) {
   });
   console.log(group);
   if (!group) {
+    assert(Contract.RPC_MAPPING[mainnet], Errors.ERR_IS_INVALID('mainnet'));
     const contractName = await Contract.getContractName(mainnet, contractAddress);
     const client = RumFullNodeClient(config.fullnode);
     {

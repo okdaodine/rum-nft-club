@@ -26,6 +26,9 @@ import openContractModal from 'components/openContractModal';
 import openGroupInfo from 'components/openGroupInfo';
 import { MdOutlineErrorOutline } from 'react-icons/md';
 import { BiChevronRight } from 'react-icons/bi';
+import MiddleTruncate from 'components/MiddleTruncate';
+import { BiCopy } from 'react-icons/bi';
+import copy from 'copy-to-clipboard';
 import MyNFTs from './MyNFTs';
 
 import './index.css';
@@ -43,6 +46,8 @@ export default observer((props: RouteChildrenProps) => {
     page: 1,
     group: null as IGroup | null,
     invisible: false,
+    mainnet: '',
+    contractAddress: '',
     get fetched() {
       return this.fetchedGroup && this.fetchedPosts
     },
@@ -78,9 +83,9 @@ export default observer((props: RouteChildrenProps) => {
     (async () => {
       try {
         const group = groupStore.nameMap[groupName];
+        const [mainnet, contractAddress] = groupName.split('.');
         if (!group) {
           await sleep(1000);
-          const [mainnet, contractAddress] = groupName.split('.');
           openContractModal({
             mainnet,
             contractAddress
@@ -90,6 +95,8 @@ export default observer((props: RouteChildrenProps) => {
         await fetchPosts(group.groupId);
         state.group = group;
         document.title = group.groupAlias;
+        state.mainnet = mainnet;
+        state.contractAddress = contractAddress;
       } catch (err) {
         console.log(err);
       }
@@ -225,6 +232,16 @@ export default observer((props: RouteChildrenProps) => {
                   }}
                 >
                   <div className="absolute top-0 left-0 right-0 bottom-0 blur-layer md:rounded-12" />
+                </div>
+                <div className="flex items-center absolute z-50 top-0 right-0 m-[10px] text-white/80 text-12 bg-white/20 rounded-full py-1 px-2 leading-none cursor-pointer" onClick={() => {
+                  copy(state.contractAddress);
+                  snackbarStore.show({
+                    message: lang.copied,
+                  });
+                }}>
+                  <img className="w-5 h-5 mr-1" src={`/mainnet/${state.mainnet}.png`} alt={state.mainnet} />
+                  <MiddleTruncate string={state.contractAddress} length={4} />
+                  <BiCopy className="ml-1 text-14" />
                 </div>
                 <div className="z-10 font-bold text-center text-22 md:text-26 text-white w-full py-4 tracking-wider">
                   {state.group.groupAlias}
