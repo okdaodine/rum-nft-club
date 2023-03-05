@@ -136,12 +136,15 @@ export const content = {
   thisWalletWasConnectedTo: 'This wallet was connected to ',
   connected: 'Linked',
   nodes: 'nodes',
-  synced: 'Got',
+  synced: 'Synced',
   contents: 'contents',
   findYourNFTClub: 'Find your NFT club',
   go: 'Go',
   setThisNFTAsAvatar: 'Set this NFT as avatar',
   AreYouSureToSetThisNFTAsAvatar: 'Are you sure to set this NFT as avatar ?',
   youDoNotHaveNFTSoYouCannotPostContent: `you don't have an NFT so you can't post content to here`,
-  youDoNotHaveThisNFT: `You don't have this NFT`
+  youDoNotHaveThisNFT: `You don't have this NFT`,
+  selectNetwork: 'Select Network',
+  contractAddress: 'Contract Address',
+  initializing: 'Initializing'
 };

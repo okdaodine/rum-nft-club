@@ -96,10 +96,10 @@ const ModalWrapper = observer((props: IModalProps) => {
             className="w-full"
             variant="outlined"
             margin="dense">
-            <InputLabel>Select Network</InputLabel>
+            <InputLabel>{lang.selectNetwork}</InputLabel>
             <Select
               value={state.mainnet}
-              label="Select Network"
+              label={lang.selectNetwork}
               onChange={(e: any) => {
                 state.mainnet = e.target.value;
               }}
@@ -117,7 +117,7 @@ const ModalWrapper = observer((props: IModalProps) => {
           <div className="pt-2" />
           <TextField
             name='Contract address'
-            label="Contract address"
+            label={lang.contractAddress}
             value={state.contractAddress}
             onChange={(e) => { state.contractAddress = e.target.value; }}
             onKeyDown={(e: any) => {

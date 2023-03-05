@@ -2,6 +2,7 @@ const rumSDK = require('rum-sdk-nodejs');
 const { assert, Errors } = require('./validator');
 const Group = require('../database/sequelize/group');
 const Seed = require('../database/sequelize/seed');
+const Contract = require('./contract');
 
 module.exports = async (url) => {
   const existGroup = await Seed.findOne({
@@ -52,11 +53,16 @@ module.exports = async (url) => {
       }
     });
   } else {
+    let groupAlias = groupName;
+    const [mainnet, contractAddress] = groupName.split('.');
+    if (mainnet && contractAddress) {
+      groupAlias = await Contract.getContractName(mainnet, contractAddress);
+    }
     await Group.create({
       seedUrl: combinedSeedUrl,
       groupId,
       groupName,
-      groupAlias: groupName,
+      groupAlias,
       startTrx: '',
       status: 'connected',
       loaded: false,

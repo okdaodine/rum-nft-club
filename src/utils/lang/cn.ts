@@ -140,12 +140,15 @@ export const content = {
   nodes: '个节点',
   synced: '同步',
   contents: '条内容',
-  findYourNFTClub: '寻找你们的 NFT 俱乐部',
-  go: '前往',
+  findYourNFTClub: '前往你们的 NFT 俱乐部',
+  go: 'Go',
   setThisNFTAsAvatar: '把这个 NFT 设置为头像',
   AreYouSureToSetThisNFTAsAvatar: '确定要设置为头像吗 ?',
   youDoNotHaveNFTSoYouCannotPostContent: '你需要持有这个 NFT 才可以发送内容哦',
-  youDoNotHaveThisNFT: '你没有持有这个 NFT'
+  youDoNotHaveThisNFT: '你没有持有这个 NFT',
+  selectNetwork: '选择网络',
+  contractAddress: '合约地址',
+  initializing: '正在初始化'
 }
 
 export type Content = typeof content;

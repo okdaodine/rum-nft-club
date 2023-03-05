@@ -23,7 +23,6 @@ async function checkGroup(ctx) {
   console.log(group);
   if (!group) {
     assert(Contract.RPC_MAPPING[mainnet], Errors.ERR_IS_INVALID('mainnet'));
-    const contractName = await Contract.getContractName(mainnet, contractAddress);
     const client = RumFullNodeClient(config.fullnode);
     {
       const res = await client.Group.create({
@@ -34,13 +33,6 @@ async function checkGroup(ctx) {
       });
       console.log(res);
       await createSeed(res.seed);
-      await Group.update({
-        groupAlias: contractName || groupName
-      }, {
-        where: {
-          groupId: res.group_id
-        }
-      });
     }
   }
   ctx.body = { groupName };

@@ -11,6 +11,7 @@ const Activity = require('./database/sequelize/activity');
 const Relation = require('./database/sequelize/relation');
 const Wallet = require('./database/sequelize/wallet');
 const Orphan = require('./database/sequelize/orphan');
+const NFT = require('./database/sequelize/nft');
 
 (async () => {
   await sleep(2000);
@@ -27,6 +28,7 @@ const Orphan = require('./database/sequelize/orphan');
     await Relation.sync({ force: true });
     await Wallet.sync({ force: true });
     await Orphan.sync({ force: true });
+    await NFT.sync({ force: true });
   } catch (err) {
     console.log(err);
   }
