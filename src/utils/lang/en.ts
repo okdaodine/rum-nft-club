@@ -62,7 +62,7 @@ export const content = {
   deleted: 'Deleted',
   deletedFromClient: 'Delete from client',
   invalid: (name: string) => `invalid ${name.toLowerCase()}`,
-  installMetaMaskFirst: 'install MetaMask first',
+  installMetaMaskFirst: 'Please install MetaMask first',
   gotIt: 'Got it',
   install: 'Install',
   cancel: 'Cancel',

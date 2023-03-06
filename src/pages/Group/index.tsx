@@ -332,7 +332,7 @@ export default observer((props: RouteChildrenProps) => {
                   </div>
                 )}
                 {state.fetchedPosts && postStore.groupTotal === 0 && (
-                  <div className="py-[30vh] text-center dark:text-white dark:text-opacity-80 text-gray-500 text-14 tracking-wider opacity-80">
+                  <div className="py-[15vh] text-center dark:text-white dark:text-opacity-80 text-gray-500 text-14 tracking-wider opacity-80">
                     {['latest', 'random'].includes(postStore.feedType) && lang.letUsPostSomething}
                     {postStore.feedType === 'following' && lang.followPeopleYouAreInterestedIn}
                     {postStore.feedType === 'latest' && isMobile && !userStore.isLogin && (

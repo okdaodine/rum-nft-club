@@ -138,7 +138,7 @@ const ModalWrapper = observer((props: IModalProps) => {
             submit();
           }}
         >
-          {state.loading && autoInit ? 'Initializing' : lang.ok}
+          {state.loading && autoInit ? lang.initializing : lang.ok}
         </Button>
       </div>
     </Modal>

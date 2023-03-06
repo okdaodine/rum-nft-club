@@ -13,12 +13,6 @@ module.exports = async (url) => {
   assert(!existGroup, Errors.ERR_IS_DUPLICATED('url'));
   const { groupId, chainAPIs, groupName } = rumSDK.utils.seedUrlToGroup(url);
   assert(chainAPIs.length > 0, Errors.ERR_IS_REQUIRED('chainAPIs'));
-  const existGroupName = await Group.findOne({
-    where: {
-      groupName
-    }
-  });
-  assert(!existGroupName, Errors.ERR_IS_DUPLICATED('groupName'));
   await Seed.create({
     url,
     groupId,
