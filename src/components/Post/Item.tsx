@@ -316,7 +316,7 @@ export default observer((props: IProps) => {
               <div className="bg-[#EFF3F4] bg-opacity-100 dark:bg-opacity-10 text-12 py-[2px] px-2 flex items-center rounded-full cursor-pointer" onClick={() => {
                 history.push(`/groups/${group.groupName}`)
               }}>
-                <img className="w-[14px] h-[14px] rounded-full mr-[6px]" src={`/mainnet/${group.groupName.split('.')[0]}.png`} alt={group.groupAlias} />
+                <img className="ml-[-1px] w-[14px] h-[14px] rounded-full mr-[5px]" src={`/mainnet/${group.groupName.split('.')[0]}.png`} alt={group.groupAlias} />
                 <span className="text-[#37434D] opacity-[0.55] font-bold dark:text-white dark:opacity-50">{group.groupAlias}</span>
               </div>
             </div>
