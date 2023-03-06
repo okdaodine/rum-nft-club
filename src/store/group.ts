@@ -16,10 +16,6 @@ export function createGroupStore() {
       return this.nameMap['default']!;
     },
 
-    get multiple() {
-      return this.groups.length > 1;
-    },
-
     get total() {
       return this.groups.length;
     },

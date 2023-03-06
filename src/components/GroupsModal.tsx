@@ -17,7 +17,7 @@ interface IProps {
 const UserList = observer((props: IProps) => {
   const { groupStore } = useStore();
   const history = useHistory();
-  const groups = groupStore.groups.filter(group => group.groupId !== groupStore.defaultGroup.groupId)
+  const groups = groupStore.groups.filter(group => !group.groupName.includes('default'))
 
   return (
     <div className="bg-white dark:bg-[#181818] rounded-12 dark:text-white dark:text-opacity-80 text-gray-4a">
@@ -35,7 +35,10 @@ const UserList = observer((props: IProps) => {
               key={group.groupName}
             >
               <div>
-                <div className="text-16 font-bold tracking-wider w-[230px] truncate">{group.groupAlias}</div>
+                <div className='flex items-center'>
+                  <img className="w-[18px] h-[18px] rounded-full mr-2" src={`/mainnet/${group.groupName.split('.')[0]}.png`} alt={group.groupAlias} />
+                  <div className="text-16 font-bold tracking-wider w-[180px] truncate">{group.groupAlias}</div>
+                </div>
                 <div className="text-12 mt-1 opacity-60 tracking-wider">
                   {lang.synced}<span className="font-bold mx-[6px]">{group.contentCount}</span>{lang.contents}
                 </div>

@@ -150,6 +150,7 @@ export default observer((props: IProps) => {
   const fromTwitter = (post.title || '').startsWith('https://twitter.com');
   const fromWeibo = (post.title || '').startsWith('https://weibo.com');
   const isTweet = fromTwitter || fromWeibo;
+  const group = groupStore.map[post.groupId];
 
   React.useEffect(() => {
     if (inPostDetail || !post.content) {
@@ -311,16 +312,14 @@ export default observer((props: IProps) => {
             {(post.images || []).length > 0 && <div className="pb-2">
               <Images images={post.images || []} />
             </div>}
-            {groupStore.multiple && (
-              <div className="flex pt-2 pb-2 tracking-wider">
-                <div className="bg-[#EFF3F4] bg-opacity-100 dark:bg-opacity-10 text-12 py-[2px] px-2 flex items-center rounded-full cursor-pointer" onClick={() => {
-                  history.push(`/groups/${groupStore.map[post.groupId].groupName}`)
-                }}>
-                  <div className="w-[10px] h-[10px] bg-[#37434D] rounded-full mr-[6px] opacity-30 dark:bg-white dark:opacity-30" />
-                  <span className="text-[#37434D] opacity-[0.55] font-bold dark:text-white dark:opacity-50">{groupStore.map[post.groupId].groupAlias}</span>
-                </div>
+            <div className="flex pt-2 pb-2 tracking-wider">
+              <div className="bg-[#EFF3F4] bg-opacity-100 dark:bg-opacity-10 text-12 py-[2px] px-2 flex items-center rounded-full cursor-pointer" onClick={() => {
+                history.push(`/groups/${group.groupName}`)
+              }}>
+                <img className="w-[14px] h-[14px] rounded-full mr-[6px]" src={`/mainnet/${group.groupName.split('.')[0]}.png`} alt={group.groupAlias} />
+                <span className="text-[#37434D] opacity-[0.55] font-bold dark:text-white dark:opacity-50">{group.groupAlias}</span>
               </div>
-            )}
+            </div>
           </div>
         </div>
 
