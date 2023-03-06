@@ -12,7 +12,6 @@ import classNames from 'classnames';
 import { runInAction } from 'mobx';
 import Loading from 'components/Loading';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import openEditor from 'components/Post/OpenEditor';
 import sleep from 'utils/sleep';
 import { RiMoreFill } from 'react-icons/ri';
 import Menu from '@material-ui/core/Menu';
@@ -31,6 +30,7 @@ import openPhotoSwipe from 'components/openPhotoSwipe';
 import { RiKey2Fill } from 'react-icons/ri';
 import openWalletModal from 'components/Wallet/openWalletModal';
 import Tooltip from '@material-ui/core/Tooltip';
+import GroupsModal from 'components/GroupsModal';
 
 import './index.css';
 
@@ -58,6 +58,7 @@ export default observer((props: RouteChildrenProps) => {
     submitting: false,
     userListType: 'following' as ('following' | 'followers' | 'muted'),
     userAddressChanged: false,
+    showGroupsModal: false
   }));
   const { userAddress } = props.match?.params as any;
   const { profile } = state;
@@ -523,24 +524,18 @@ export default observer((props: RouteChildrenProps) => {
             <div className="flex justify-center py-16">
               <Button
                 outline
-                onClick={async () => {
-                  const post = await openEditor();
-                  if (post) {
-                    await sleep(400);
-                    scrollToTop();
-                    await sleep(200);
-                    postStore.addUserPost(post);
-                    if (postStore.feedType === 'latest') {
-                      postStore.addPost(post);
-                    }
-                    userStore.updateUser(userAddress, {
-                      postCount: user.postCount + 1
-                    });
-                  }
+                onClick={() => {
+                  state.showGroupsModal = true;
                 }}
               >
-                {lang.letUsPostSomething}
+                {lang.findYourNFTClub}
               </Button>
+              <GroupsModal
+                open={state.showGroupsModal}
+                onClose={() => {
+                  state.showGroupsModal = false;
+                }}
+              />
             </div>
           )}
           {!isMyself && state.fetched && user.postCount === 0 && (

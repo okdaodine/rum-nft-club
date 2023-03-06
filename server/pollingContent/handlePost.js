@@ -12,6 +12,9 @@ const Contract = require('../utils/contract');
 module.exports = async (item, group) => {
   const post = await pack(item);
   const [mainnet, contractAddress] = group.groupName.split('.');
+  if (!mainnet || !contractAddress) {
+    return;
+  }
   const wallet = await Wallet.findOne({ where: { address: post.userAddress }});
   if (!wallet) {
     console.log('[Handle post]: Could not found wallet then skip it 🤷‍♂️');

@@ -18,7 +18,7 @@ import { isMobile } from 'utils/env';
 import TopPlaceHolder from 'components/TopPlaceHolder';
 import { v4 as uuid } from 'uuid';
 import base64 from 'utils/base64';
-import GroupsModal from './GroupsModal';
+import GroupsModal from 'components/GroupsModal';
 
 export default observer(() => {
   const { userStore, postStore, groupStore } = useStore();
