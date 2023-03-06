@@ -54,7 +54,7 @@ async function checkUserAddress(ctx) {
   if (count > 0) {
     const nfts = await Contract.getNFTs(mainnet, contractAddress, wallet.providerAddress, count);
     for (const nft of nfts) {
-      const exist = await NFT.findOne({ where: { mainnet, contractAddress, tokenId: nft.tokenId } })
+      const exist = await NFT.findOne({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress, tokenId: nft.tokenId } })
       if (!exist) {
         await NFT.create(nft);
       }

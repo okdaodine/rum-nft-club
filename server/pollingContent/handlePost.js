@@ -25,7 +25,12 @@ module.exports = async (item, group) => {
     const count = await Contract.getNFTCount(mainnet, contractAddress, wallet.providerAddress);
     if (count > 0) {
       const nfts = await Contract.getNFTs(mainnet, contractAddress, wallet.providerAddress, count);
-      await NFT.bulkCreate(nfts);
+      for (const nft of nfts) {
+        const exist = await NFT.findOne({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress, tokenId: nft.tokenId } })
+        if (!exist) {
+          await NFT.create(nft);
+        }
+      }
       console.log(`Got and saved ${count} NFTs`);
     } else {
       console.log('[Handle post]: Could not found NFT then skip it 🤷‍♂️');

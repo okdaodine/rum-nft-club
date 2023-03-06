@@ -239,7 +239,7 @@ export default observer((props: RouteChildrenProps) => {
                     message: lang.copied,
                   });
                 }}>
-                  <img className="w-5 h-5 mr-1" src={`/mainnet/${state.mainnet}.png`} alt={state.mainnet} />
+                  <img className="w-5 h-5 mr-1 rounded-full" src={`/mainnet/${state.mainnet}.png`} alt={state.mainnet} />
                   <MiddleTruncate string={state.contractAddress} length={4} />
                   <BiCopy className="ml-1 text-14" />
                 </div>

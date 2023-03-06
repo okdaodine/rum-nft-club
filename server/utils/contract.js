@@ -81,7 +81,8 @@ const getNFTs = async (mainnet, contractAddress, userAddress, count) => {
       const image = getFileUrl(fileRes.data.image);
       return { mainnet, contractAddress, userAddress, image, tokenId }
     } catch (_) {
-      return null;
+      console.log('Could not found nft token id 🤷‍♂️');
+      return { mainnet, contractAddress, userAddress, image: `/mainnet/${mainnet}.png`, tokenId: index }
     }
   }));
   return nfts.filter(nft => !!nft);

@@ -34,7 +34,7 @@ const NFT = sequelize.define('nfts', {
   indexes: [{
     fields: ['mainnet', 'contractAddress', 'userAddress']
   }, {
-    fields: ['mainnet', 'contractAddress', 'tokenId']
+    fields: ['mainnet', 'contractAddress', 'userAddress', 'tokenId']
   }]
 });
 
