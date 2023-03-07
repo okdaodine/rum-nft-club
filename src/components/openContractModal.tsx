@@ -86,7 +86,7 @@ const ModalWrapper = observer((props: IModalProps) => {
 
   return (
     <Modal open={state.open} onClose={() => handleClose(false)}>
-      <div className="p-8 relative w-full md:w-[380px] h-[40vh] md:h-auto box-border">
+      <div className="p-8 relative w-full md:w-[380px] box-border">
         <div className="text-18 font-bold dark:text-white dark:text-opacity-80 text-gray-700 text-center">
           <div className="flex items-center justify-center">
             {lang.findYourNFTClub}

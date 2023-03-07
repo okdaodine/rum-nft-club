@@ -44,7 +44,10 @@ async function checkUserAddress(ctx) {
   const group = await Group.findOne({ where: { groupName }});
   assert(group, Errors.ERR_NOT_FOUND('group'));
   const wallet = await Wallet.findOne({ where: { address: userAddress }});
-  assert(wallet, Errors.ERR_NOT_FOUND('wallet'));
+  if (!wallet) {
+    ctx.body = [];
+    return;
+  }
   const nfts = await NFT.findAll({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress }});
   if (nfts.length > 0) {
     ctx.body = nfts;

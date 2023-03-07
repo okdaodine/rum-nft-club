@@ -11,11 +11,16 @@ import Button from 'components/Button';
 import { lang } from 'utils/lang';
 import { TrxApi, WalletApi } from 'apis';
 import rumSDK from 'rum-sdk-browser';
+import sleep from 'utils/sleep';
+import ImportModal from './ImportModal';
+import openWalletModal from './openWalletModal';
 
 const Main = observer(() => {
   const { userStore ,snackbarStore, confirmDialogStore, groupStore } = useStore();
   const state = useLocalObservable(() => ({
     loadingMetaMask: false,
+    creatingWallet: false,
+    openImportModal: false
   }));
 
   const connectWallet = (address: string, privateKey: string) => {
@@ -133,6 +138,43 @@ const Main = observer(() => {
           MetaMask{state.loadingMetaMask && '...'}
         </Button>
       </div>
+      <div className="justify-center mt-6 md:mt-4 w-full flex">
+        <Button
+          className="tracking-widest"
+          fullWidth
+          onClick={async () => {
+            state.creatingWallet = true;
+            await sleep(10);
+            const wallet = ethers.Wallet.createRandom();
+            await sleep(200);
+            const done = await openWalletModal(wallet.privateKey);
+            state.creatingWallet = false;
+            if (done) {
+              connectWallet(wallet.address, wallet.privateKey);
+              window.location.href += '?action=openProfileEditor';
+            }
+          }}
+        >
+          {lang.createWallet}{state.creatingWallet && '...'}
+        </Button>
+      </div>
+      <div className="justify-center mt-6 md:mt-4 w-full flex">
+        <Button
+          className="tracking-widest"
+          fullWidth
+          onClick={async () => {
+            state.openImportModal = true;
+          }}
+        >
+          {lang.importWallet}
+        </Button>
+      </div>
+      <ImportModal
+        open={state.openImportModal}
+        onClose={() => {
+          state.openImportModal = false;
+        }}
+      />
     </div>
   )
 });

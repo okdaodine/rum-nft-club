@@ -20,7 +20,7 @@ const UserList = observer((props: IProps) => {
   const groups = groupStore.groups.filter(group => !group.groupName.includes('default'))
 
   return (
-    <div className="bg-white dark:bg-[#181818] rounded-12 dark:text-white dark:text-opacity-80 text-gray-4a">
+    <div className="bg-white dark:bg-[#181818] rounded-12 dark:text-white dark:text-opacity-80 text-gray-4a h-[80vh] md:h-auto">
       <div className="px-5 py-5 leading-none text-18 border-b dark:border-white dark:md:border-opacity-10 dark:border-opacity-[0.05] border-gray-d8 border-opacity-75 flex justify-between items-center font-bold">
         {lang.findYourNFTClub}
         <div className="cursor-pointer text-24 px-2" onClick={() => openContractModal()}>
