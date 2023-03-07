@@ -148,7 +148,8 @@ export const content = {
   youDoNotHaveThisNFT: '你没有持有这个 NFT',
   selectNetwork: '选择网络',
   contractAddress: '合约地址',
-  initializing: '正在初始化'
+  initializing: '正在初始化',
+  contract: '合约'
 }
 
 export type Content = typeof content;

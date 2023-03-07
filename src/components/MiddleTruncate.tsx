@@ -7,11 +7,12 @@ import { lang } from 'utils/lang';
 interface IProps {
   string: string
   length: number
+  tooltipPrefix?: string
 }
 
 export default observer((props: IProps) => {
   const { snackbarStore } = useStore();
-  const { string, length } = props;
+  const { string, length, tooltipPrefix = '' } = props;
 
   if (!string) {
     return null;
@@ -27,11 +28,11 @@ export default observer((props: IProps) => {
     >
       <Tooltip
         placement="top"
-        title={string}
+        title={`${tooltipPrefix}${string}`}
         arrow
         interactive
-        enterDelay={1000}
-        enterNextDelay={1000}
+        enterDelay={400}
+        enterNextDelay={400}
       >
         <div className="truncate">{`${string.slice(
           0,

@@ -23,7 +23,8 @@ const mainnetList = [
   'Polygon',
   'Avalanche',
   'BSC',
-  'RUM'
+  'Mixin',
+  'Rum'
 ];
 
 interface IModalProps extends IProps {

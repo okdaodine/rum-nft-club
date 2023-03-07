@@ -52,6 +52,7 @@ const RPC_MAPPING = config.RPC_MAPPING || {
   avalanche: 'https://1rpc.io/avax/c',
   bsc: 'https://bsc-dataseed.binance.org',
   polygon: 'https://endpoints.omniatech.io/v1/matic/mainnet/public',
+  mixin: 'https://geth.mvm.dev',
   rum: 'http://149.56.22.113:8545'
 }
 
@@ -78,7 +79,12 @@ const getNFTs = async (mainnet, contractAddress, userAddress, count) => {
       const tokenId = getInt(await contract.tokenOfOwnerByIndex(userAddress, index));
       const tokenURI = await contract.tokenURI(tokenId);
       const fileRes = await axios.get(getFileUrl(tokenURI));
-      const image = getFileUrl(fileRes.data.image);
+      let image = '';
+      if (mainnet === 'mixin') {
+        image = fileRes.data.token.icon.url;
+      } else {
+        image = getFileUrl(fileRes.data.image);
+      }
       return { mainnet, contractAddress, userAddress, image, tokenId }
     } catch (_) {
       console.log('Could not found nft token id 🤷‍♂️');

@@ -146,5 +146,6 @@ export const content = {
   youDoNotHaveThisNFT: `You don't have this NFT`,
   selectNetwork: 'Select Network',
   contractAddress: 'Contract Address',
-  initializing: 'Initializing'
+  initializing: 'Initializing',
+  contract: 'Contract'
 };
