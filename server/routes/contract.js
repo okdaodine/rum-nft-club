@@ -39,25 +39,22 @@ async function checkGroup(ctx) {
 }
 
 async function checkUserAddress(ctx) {
-  const { mainnet, contractAddress, userAddress } = ctx.params;
+  const { mainnet, contractAddress } = ctx.params;
   const groupName = `${mainnet}.${contractAddress}`;
   const group = await Group.findOne({ where: { groupName }});
   assert(group, Errors.ERR_NOT_FOUND('group'));
-  const wallet = await Wallet.findOne({ where: { address: userAddress }});
-  if (!wallet) {
-    ctx.body = [];
-    return;
-  }
-  const nfts = await NFT.findAll({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress }});
+  const wallet = await Wallet.findOne({ where: { address: ctx.params.userAddress }});
+  const userAddress = wallet ? wallet.providerAddress : ctx.params.userAddress;
+  const nfts = await NFT.findAll({ where: { mainnet, contractAddress, userAddress }});
   if (nfts.length > 0) {
     ctx.body = nfts;
     return;
   }
-  const count = await Contract.getNFTCount(mainnet, contractAddress, wallet.providerAddress);
+  const count = await Contract.getNFTCount(mainnet, contractAddress, userAddress);
   if (count > 0) {
-    const nfts = await Contract.getNFTs(mainnet, contractAddress, wallet.providerAddress, count);
+    const nfts = await Contract.getNFTs(mainnet, contractAddress, userAddress, count);
     for (const nft of nfts) {
-      const exist = await NFT.findOne({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress, tokenId: nft.tokenId } })
+      const exist = await NFT.findOne({ where: { mainnet, contractAddress, userAddress, tokenId: nft.tokenId } })
       if (!exist) {
         await NFT.create(nft);
       }

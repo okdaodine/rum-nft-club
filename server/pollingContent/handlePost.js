@@ -16,17 +16,14 @@ module.exports = async (item, group) => {
     return;
   }
   const wallet = await Wallet.findOne({ where: { address: post.userAddress }});
-  if (!wallet) {
-    console.log('[Handle post]: Could not found wallet then skip it 🤷‍♂️');
-    return;
-  }
-  const existNFT = await NFT.findOne({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress } });
+  const userAddress = wallet ? wallet.providerAddress : post.userAddress;
+  const existNFT = await NFT.findOne({ where: { mainnet, contractAddress, userAddress } });
   if (!existNFT) {
-    const count = await Contract.getNFTCount(mainnet, contractAddress, wallet.providerAddress);
+    const count = await Contract.getNFTCount(mainnet, contractAddress, userAddress);
     if (count > 0) {
-      const nfts = await Contract.getNFTs(mainnet, contractAddress, wallet.providerAddress, count);
+      const nfts = await Contract.getNFTs(mainnet, contractAddress, userAddress, count);
       for (const nft of nfts) {
-        const exist = await NFT.findOne({ where: { mainnet, contractAddress, userAddress: wallet.providerAddress, tokenId: nft.tokenId } })
+        const exist = await NFT.findOne({ where: { mainnet, contractAddress, userAddress, tokenId: nft.tokenId } })
         if (!exist) {
           await NFT.create(nft);
         }
