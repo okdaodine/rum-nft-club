@@ -147,5 +147,6 @@ export const content = {
   selectNetwork: 'Select Network',
   contractAddress: 'Contract Address',
   initializing: 'Initializing',
-  contract: 'Contract'
+  contract: 'Contract',
+  groupInfo: 'Group info'
 };

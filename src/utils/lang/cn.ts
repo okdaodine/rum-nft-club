@@ -149,7 +149,8 @@ export const content = {
   selectNetwork: '选择网络',
   contractAddress: '合约地址',
   initializing: '正在初始化',
-  contract: '合约'
+  contract: '合约',
+  groupInfo: '种子网络详情'
 }
 
 export type Content = typeof content;

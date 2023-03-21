@@ -328,7 +328,7 @@ export default observer(() => {
             enterDelay={200}
             enterNextDelay={200}
             placement="left"
-            title="种子网络详情"
+            title={lang.groupInfo}
             arrow
             interactive
             >
