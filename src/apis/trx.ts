@@ -7,7 +7,9 @@ export default {
   async createActivity(activity: IActivity, groupId: string, privateKey?: string) {
     console.log(activity, groupId)
     const { groupStore, userStore } = (window as any).store as Store;
-    const group = groupStore.map[groupId]
+    const group = groupStore.map[groupId];
+
+    activity.published = new Date().toISOString();
 
     const payload = await utils.signTrx({
       data: activity,
