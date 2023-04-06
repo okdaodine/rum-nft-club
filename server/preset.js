@@ -23,6 +23,7 @@ async function tryCreateDefaultGroup () {
           consensus_type: 'poa',
           encryption_type: 'public',
           app_key: 'group_timeline',
+          include_chain_url: true,
         });
         seed = res.seed;
       }

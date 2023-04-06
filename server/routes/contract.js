@@ -30,6 +30,7 @@ async function checkGroup(ctx) {
         consensus_type: 'poa',
         encryption_type: 'public',
         app_key: 'group_timeline',
+        include_chain_url: true,
       });
       console.log(res);
       await createSeed(res.seed);
