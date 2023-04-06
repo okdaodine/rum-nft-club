@@ -36,7 +36,7 @@ const PostEditor = observer((props: {
     console.log(res);
     const post: IPost = {
       content: activity.object?.content || '',
-      images: (activity.object?.image || []).map(image => Base64.getUrl(image as any as IImage)),
+      images: ((activity.object?.image as []) || []).map(image => Base64.getUrl(image as any as IImage)),
       userAddress: userStore.address,
       groupId: group.groupId,
       trxId: res.trx_id,

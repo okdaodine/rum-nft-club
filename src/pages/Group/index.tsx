@@ -185,7 +185,7 @@ export default observer((props: RouteChildrenProps) => {
     console.log(res);
     const post: IPost = {
       content: activity.object?.content || '',
-      images: activity.object?.image?.map(image => base64.getUrl(image as any)) ?? [],
+      images: ((activity.object?.image as []) || []).map(image => base64.getUrl(image as any)) ?? [],
       userAddress: userStore.address,
       groupId: state.group!.groupId,
       trxId: res.trx_id,
@@ -194,7 +194,7 @@ export default observer((props: RouteChildrenProps) => {
       storage: TrxStorage.cache,
       commentCount: 0,
       likeCount: 0,
-      imageCount: (activity.object?.image || []).length,
+      imageCount: ((activity.object?.image as []) || []).length,
       timestamp: Date.now(),
       extra: {
         userProfile: userStore.profile,
